@@ -1,4 +1,4 @@
-# Work Sample Test
+# Hiring Challenge
 ## Backend Code
 
 The prices are wrong!
