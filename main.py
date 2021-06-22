@@ -56,9 +56,24 @@ class App:
         self.FolderSelectedText.configure(text = DEFAULT_FOLDER_SELECTED_LABEL_TEXT)
         self.GenerateReportButton["state"] = "disabled"
 
+    # Gets all files in directory
+    def getAllFilesInDir(self, directoryPath):
+      files = []
+      for (dirpath, dirnames, filenames) in os.walk(directoryPath):
+        for file in filenames:
+          files.append(file)
+
+      return files
+
     # takes folder
     def GenerateReportButton_command(self):
-        print(self.folderName)
+      directoryPath = self.folderName
+      files = self.getAllFilesInDir(directoryPath)
+      if any(".csv" in filename for filename in files):
+        print("Exists")
+      else:
+        tk.messagebox.showerror(title="Invalid Folder", message="Could not find product and pricing csv file")
+        
 
 if __name__ == "__main__":
     root = tk.Tk()
