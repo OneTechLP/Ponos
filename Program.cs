@@ -38,7 +38,7 @@ namespace Ponos
             var files = Directory.GetFiles(directory);
             
             // get all wrong charges
-            var wrongChargesTasks = files.Select(i => GetWrongCharges(i, prices));
+            var wrongChargesTasks = files.Select(i => GetWrongChargesAsync(i, prices));
             Task.WhenAll(wrongChargesTasks); 
 
             var wrongCharges = wrongChargesTasks
@@ -59,7 +59,7 @@ namespace Ponos
             }
         }
 
-        static async Task<PriceDifference[]> GetWrongCharges(string path, List<Product> prices)
+        static async Task<PriceDifference[]> GetWrongChargesAsync(string path, List<Product> prices)
         {
             var lines = (await System.IO.File.ReadAllLinesAsync(path))
                 .Skip(1)      // remove store number
