@@ -61,6 +61,6 @@ def createMischargesCSV(fileOutput, mischarges):
   with fileOutput as csvfile:
     writer = csv.DictWriter(csvfile, ['productCode', 'count', 'total'])
     writer.writerow({'productCode': 'Product Code', 'count': 'Count', 'total': 'Total' })
-    for item in mischarges.values():
+    for item in mischarges:
       writer.writerow(item)
   fileOutput.close()

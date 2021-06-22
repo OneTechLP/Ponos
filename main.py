@@ -62,17 +62,23 @@ class App:
     # then asks user where to save generated csv file
     def GenerateReportButton_command(self):
       directoryPath = self.folderName
-      # get 
+      # get list of all files and product prices
       filesOutput = handleFiles(directoryPath)
       receiptChecker = ReceiptAnalyzer(filesOutput['products'])
       receipts = filesOutput['files']
       
+      # go through all receipts in folder and validate their prices
       for receipt in receipts:
         receiptContent = receiptChecker.parseReceipt(receipt)
         receiptChecker.validatePrices(receiptContent)
 
+      # ask user where they want the report saved and its name
       mischargesFile = filedialog.asksaveasfile(mode="w",filetypes=[("CSV Files","*.csv")])
-      createMischargesCSV(mischargesFile, receiptChecker.mischarges)
+      
+      # sort from lowest total to highest
+      sortedMischarges = sorted(receiptChecker.mischarges.values(), key=lambda x: x['total'], reverse=False)
+      
+      createMischargesCSV(mischargesFile, sortedMischarges)
       
 
 if __name__ == "__main__":
