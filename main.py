@@ -65,10 +65,11 @@ class App:
       # get 
       filesOutput = handleFiles(directoryPath)
       receiptChecker = ReceiptAnalyzer(filesOutput['products'])
-      receipt = filesOutput['files'][0]
+      receipts = filesOutput['files']
       
-      receiptContent = receiptChecker.parseReceipt(receipt)
-      receiptChecker.validatePrices(receiptContent)
+      for receipt in receipts:
+        receiptContent = receiptChecker.parseReceipt(receipt)
+        receiptChecker.validatePrices(receiptContent)
 
       mischargesFile = filedialog.asksaveasfile(mode="w",filetypes=[("CSV Files","*.csv")])
       createMischargesCSV(mischargesFile, receiptChecker.mischarges)
