@@ -2,6 +2,8 @@ import os
 import tkinter as tk
 import tkinter.font as tkFont
 from tkinter import filedialog
+from fileHandler import handleFiles, createMischargesCSV
+from receiptAnalyzer import ReceiptAnalyzer
 
 DEFAULT_FOLDER_SELECTED_LABEL_TEXT = "No folder selected"
 
@@ -56,28 +58,21 @@ class App:
         self.FolderSelectedText.configure(text = DEFAULT_FOLDER_SELECTED_LABEL_TEXT)
         self.GenerateReportButton["state"] = "disabled"
 
-    # Gets all files in directory
-    def getAllFilesInDir(self, directoryPath):
-      files = []
-      for (dirpath, dirnames, filenames) in os.walk(directoryPath):
-        for file in filenames:
-          files.append(file)
-
-      return files
-
-    # takes folder
+    # takes folder and runs necessary commands to get list of mischarges
+    # then asks user where to save generated csv file
     def GenerateReportButton_command(self):
       directoryPath = self.folderName
-      files = self.getAllFilesInDir(directoryPath)
-      matching = [filename for filename in files if ".csv" in filename]
-      print(matching)
-      if len(matching) == 1:
-        print("Exists")
-      elif len(matching) == 0:
-        tk.messagebox.showerror(title="Invalid Folder", message="Could not find product and pricing csv file")
-      elif len(matching) > 1:
-        tk.messagebox.showerror(title="Invalid Folder", message="Too many csv files found. Expecting only one")
-        
+      # get 
+      filesOutput = handleFiles(directoryPath)
+      receiptChecker = ReceiptAnalyzer(filesOutput['products'])
+      receipt = filesOutput['files'][0]
+      
+      receiptContent = receiptChecker.parseReceipt(receipt)
+      receiptChecker.validatePrices(receiptContent)
+
+      mischargesFile = filedialog.asksaveasfile(mode="w",filetypes=[("CSV Files","*.csv")])
+      createMischargesCSV(mischargesFile, receiptChecker.mischarges)
+      
 
 if __name__ == "__main__":
     root = tk.Tk()
