@@ -69,10 +69,14 @@ class App:
     def GenerateReportButton_command(self):
       directoryPath = self.folderName
       files = self.getAllFilesInDir(directoryPath)
-      if any(".csv" in filename for filename in files):
+      matching = [filename for filename in files if ".csv" in filename]
+      print(matching)
+      if len(matching) == 1:
         print("Exists")
-      else:
+      elif len(matching) == 0:
         tk.messagebox.showerror(title="Invalid Folder", message="Could not find product and pricing csv file")
+      elif len(matching) > 1:
+        tk.messagebox.showerror(title="Invalid Folder", message="Too many csv files found. Expecting only one")
         
 
 if __name__ == "__main__":
