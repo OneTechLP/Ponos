@@ -44,7 +44,7 @@ class ReceiptAnalyzer:
     code = validationResult['code']
     priceDifference = validationResult['priceDifference']
 
-    if hasattr(self.mischarges, code):
+    if code in self.mischarges:
       self.mischarges[code]['total'] += priceDifference
       self.mischarges[code]['count'] += 1
     else:
