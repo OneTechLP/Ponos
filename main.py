@@ -60,6 +60,14 @@ class App:
         self.FolderSelectedText.configure(text = DEFAULT_FOLDER_SELECTED_LABEL_TEXT)
         self.GenerateReportButton["state"] = "disabled"
 
+    # checks if file name has csv extension. If not, we append `.csv` to end
+    def ensureSelectedFileIsCSV(self, file):
+      defaultExtension = ".csv"
+      originalFileName = file.name
+      file.close()
+      ensuredCSVFile = originalFileName if originalFileName[-len(defaultExtension):].lower() == defaultExtension else originalFileName + defaultExtension
+      return ensuredCSVFile
+
     # takes folder and runs necessary helpers to get list of mischarges
     # then asks user where to save generated csv file
     def GenerateReportButton_command(self):
@@ -74,15 +82,16 @@ class App:
         receiptContent = receiptChecker.parseReceipt(receipt)
         receiptChecker.validatePrices(receiptContent)
 
-      # ask user where they want the report saved and its name
-      reportExtension = [("CSV Files","*.csv")]
-      mischargesFile = filedialog.asksaveasfile(mode="w",filetypes=reportExtension, defaultextension=reportExtension)
-      
       # sort from lowest total to highest
       sortedMischarges = sorted(receiptChecker.mischarges.values(), key=lambda x: x['total'], reverse=False)
 
+      # ask user where they want the report saved and its name
+      mischargesFile = filedialog.asksaveasfile(mode="w",filetypes=[("CSV Files","*.csv")], defaultextension=".csv")
+
+      mischargesFile = self.ensureSelectedFileIsCSV(mischargesFile)
+
       createMischargesCSV(mischargesFile, sortedMischarges)
-      tk.messagebox.showinfo(title="Finished", message="Report generated and saved to: " + mischargesFile.name)
+      tk.messagebox.showinfo(title="Finished", message="Report generated and saved to: " + mischargesFile)
       
 
 if __name__ == "__main__":

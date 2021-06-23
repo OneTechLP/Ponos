@@ -67,10 +67,9 @@ def handleFiles(directoryPath):
     "products": productOutput['products']
   }
 
-def createMischargesCSV(fileOutput, mischarges):
-  with fileOutput as csvfile:
-    writer = csv.DictWriter(csvfile, ['productCode', 'count', 'total'])
+def createMischargesCSV(filePath, mischarges):
+  with open(filePath, 'w', newline='') as csvFile:
+    writer = csv.DictWriter(csvFile, ['productCode', 'count', 'total'])
     writer.writerow({'productCode': 'Product Code', 'count': 'Count', 'total': 'Total' })
     for item in mischarges:
       writer.writerow(item)
-  fileOutput.close()
