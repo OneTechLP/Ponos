@@ -79,8 +79,9 @@ class App:
       
       # sort from lowest total to highest
       sortedMischarges = sorted(receiptChecker.mischarges.values(), key=lambda x: x['total'], reverse=False)
-      
+
       createMischargesCSV(mischargesFile, sortedMischarges)
+      tk.messagebox.showinfo(title="Finished", message="Report generated and saved to: " + mischargesFile.name)
       
 
 if __name__ == "__main__":
