@@ -2,6 +2,7 @@ import re
 
 PRODUCT_REGEX = "^(.+)((?<=\s)\d+(?=\s))\s+(\d+[.]\d+)"
 
+# Used to parse, analyze and validate receipts. Also stores and manages data for mischarges
 class ReceiptAnalyzer:
   def __init__(self, products):
     self.products = products

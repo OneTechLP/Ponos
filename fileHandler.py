@@ -1,3 +1,4 @@
+# File contains a list of helpers for handling basic file management to creating the report
 import os
 import tkinter as tk
 import csv

@@ -7,6 +7,8 @@ from receiptAnalyzer import ReceiptAnalyzer
 
 DEFAULT_FOLDER_SELECTED_LABEL_TEXT = "No folder selected"
 
+# Used to create GUI and handle button commands
+# uses helper methods for handling files and analyzing the receipts
 class App:
     def __init__(self, root):
         root.title("Ponos")
@@ -58,7 +60,7 @@ class App:
         self.FolderSelectedText.configure(text = DEFAULT_FOLDER_SELECTED_LABEL_TEXT)
         self.GenerateReportButton["state"] = "disabled"
 
-    # takes folder and runs necessary commands to get list of mischarges
+    # takes folder and runs necessary helpers to get list of mischarges
     # then asks user where to save generated csv file
     def GenerateReportButton_command(self):
       directoryPath = self.folderName
