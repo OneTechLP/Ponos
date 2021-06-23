@@ -75,7 +75,8 @@ class App:
         receiptChecker.validatePrices(receiptContent)
 
       # ask user where they want the report saved and its name
-      mischargesFile = filedialog.asksaveasfile(mode="w",filetypes=[("CSV Files","*.csv")])
+      reportExtension = [("CSV Files","*.csv")]
+      mischargesFile = filedialog.asksaveasfile(mode="w",filetypes=reportExtension, defaultextension=reportExtension)
       
       # sort from lowest total to highest
       sortedMischarges = sorted(receiptChecker.mischarges.values(), key=lambda x: x['total'], reverse=False)
