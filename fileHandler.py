@@ -12,6 +12,14 @@ def getAllFilesInDir(directoryPath):
 
   return files
 
+# checks if file path contains "PaxHeader" directory
+def isNotPaxHeaderFile(file):
+  return "PaxHeader" not in file
+
+# removes all files inside PaxHeader directories
+def removePaxHeaders(files):
+  return list(filter(isNotPaxHeaderFile, files))
+
 # takes list of file paths and finds csv file. If more/less than 1, show error to user. Else we parse file. If no products, throw error,
 # else returned parsed content
 def checkAndValidatePricesCSV(files):
@@ -45,6 +53,7 @@ def checkAndValidatePricesCSV(files):
 # takes directory path and finds/validates prices csv file and returns receipt files and prices csv content
 def handleFiles(directoryPath):
   files = getAllFilesInDir(directoryPath)
+  files = removePaxHeaders(files)
   
   productOutput = checkAndValidatePricesCSV(files)
 
