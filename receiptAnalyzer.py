@@ -1,5 +1,6 @@
 import re
 
+PRODUCT_CODE_REGEX = "((?<=\s)\d+(?=\s))"
 PRODUCT_REGEX = "^(.+)((?<=\s)\d+(?=\s))\s+(\d+[.]\d+)"
 
 # Used to parse, analyze and validate receipts. Also stores and manages data for mischarges
@@ -8,6 +9,17 @@ class ReceiptAnalyzer:
     self.products = products
     # [code]: {productCode, count, total}
     self.mischarges = {}
+
+  # ensures voided product code matches previous entry in receipt, else does not remove that entry
+  def voidProduct(self, line, customerProducts):
+    regex = re.compile(PRODUCT_CODE_REGEX)
+    matches = regex.search(line)
+    if matches is None:
+      return None
+    
+    voidedCode = matches.group(1)
+    if customerProducts[-1]["code"] == voidedCode:
+      customerProducts.pop()
 
   # takes a receipt line and attempts to break it into {name, code, price}
   def parseReceiptLine(self, line):
@@ -36,7 +48,7 @@ class ReceiptAnalyzer:
       for currentIndex in range(1, len(lines) - 1):
         line = lines[currentIndex]
         if '*** VOIDED PRODUCT' in line:
-          customerProducts.pop()
+          self.voidProduct(line, customerProducts)
         else:
           lastProduct = line
           parts = self.parseReceiptLine(line)
