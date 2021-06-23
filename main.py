@@ -44,7 +44,7 @@ class App:
         self.GenerateReportButton["fg"] = "#000000"
         self.GenerateReportButton["justify"] = "center"
         self.GenerateReportButton["text"] = "Generate Report"
-        self.GenerateReportButton.place(x=20,y=120,width=125,height=25)
+        self.GenerateReportButton.place(x=20,y=120,width=175,height=25)
         self.GenerateReportButton["command"] = self.GenerateReportButton_command
         self.GenerateReportButton["state"] = "disabled"
 
