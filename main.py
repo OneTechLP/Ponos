@@ -88,6 +88,10 @@ class App:
       # ask user where they want the report saved and its name
       mischargesFile = filedialog.asksaveasfile(mode="w",filetypes=[("CSV Files","*.csv")], defaultextension=".csv")
 
+      if mischargesFile is None:
+        tk.messagebox.showerror(title="Invalid Report File", message="No file selected for report. Please try again")
+        return None
+
       mischargesFile = self.ensureSelectedFileIsCSV(mischargesFile)
 
       createMischargesCSV(mischargesFile, sortedMischarges)
