@@ -13,16 +13,19 @@ class ReceiptAnalyzer:
   def parseReceiptLine(self, line):
     regex = re.compile(PRODUCT_REGEX)
     matches = regex.search(line)
-
+    if matches is None:
+      return None
     return {
       "name":  matches.group(1),
       "code": matches.group(2),
       "price": float(matches.group(3))
     }
 
-  # takes a receipt and loops through each line, parsing them and adding to an array that will be returned to user
+  # takes a receipt (file path) and loops through each line, parsing them and adding to an array that will be returned to user
   # if finds a voided line, we remove last element from array
+  # ignores improperly formatted lines
   # array returned is an array of objects with attributes {name, code, price}
+  # if empty array is returned, no valid lines were found, likely an invalid receipt
   def parseReceipt(self, receipt):
     customerProducts = []
 
@@ -37,7 +40,8 @@ class ReceiptAnalyzer:
         else:
           lastProduct = line
           parts = self.parseReceiptLine(line)
-          customerProducts.append(parts)
+          if parts is not None:
+            customerProducts.append(parts)
       
     return customerProducts
           
