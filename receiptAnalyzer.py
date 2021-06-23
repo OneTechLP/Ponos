@@ -11,15 +11,15 @@ class ReceiptAnalyzer:
     self.mischarges = {}
 
   # ensures voided product code matches previous entry in receipt, else does not remove that entry
-  def voidProduct(self, line, customerProducts):
-    regex = re.compile(PRODUCT_CODE_REGEX)
-    matches = regex.search(line)
-    if matches is None:
-      return None
+  # def voidProduct(self, line, customerProducts):
+  #   regex = re.compile(PRODUCT_CODE_REGEX)
+  #   matches = regex.search(line)
+  #   if matches is None:
+  #     return None
     
-    voidedCode = matches.group(1)
-    if customerProducts[-1]["code"] == voidedCode:
-      customerProducts.pop()
+  #   voidedCode = matches.group(1)
+  #   if customerProducts[-1]["code"] == voidedCode:
+  #     customerProducts.pop()
 
   # takes a receipt line and attempts to break it into {name, code, price}
   def parseReceiptLine(self, line):
@@ -48,7 +48,8 @@ class ReceiptAnalyzer:
       for currentIndex in range(1, len(lines) - 1):
         line = lines[currentIndex]
         if '*** VOIDED PRODUCT' in line:
-          self.voidProduct(line, customerProducts)
+          # self.voidProduct(line, customerProducts)
+          customerProducts.pop()
         else:
           lastProduct = line
           parts = self.parseReceiptLine(line)
