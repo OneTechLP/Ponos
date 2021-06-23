@@ -54,7 +54,7 @@ class App:
       self.folderName = filedialog.askdirectory(initialdir = os.getcwd())
       
       if self.folderName: 
-        self.FolderSelectedText.configure(text = "Folder Opened: " + self.folderName)
+        self.FolderSelectedText.configure(text = "Folder Selected: " + self.folderName)
         self.GenerateReportButton["state"] = "normal"
       else:
         self.FolderSelectedText.configure(text = DEFAULT_FOLDER_SELECTED_LABEL_TEXT)
