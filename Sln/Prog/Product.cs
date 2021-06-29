@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace Prog
 {
@@ -37,7 +38,16 @@ namespace Prog
 
         public static IEnumerable<Product> ConvertReceiptToEnumerable(string[] values)
         {
-            return new List<Product>();
+            var usefulLines = values.Skip(1).SkipLast(1);
+            
+          
+
+            return usefulLines.Select(product => product.Split(','))
+                .Select(product => new Product
+                {
+                    Code = product[0],
+                    Price = Convert.ToDecimal(product[1])
+                });
         }
 
         private static async Task<string[]> ReadFromFile(string path)
