@@ -28,7 +28,7 @@ namespace Prog
                 });
         }
 
-        public static async Task<IEnumerable<Product>> ReadReciptFromFile(string path)
+        public static async Task<IEnumerable<Product>> ReadReceiptFromFile(string path)
         {
             var fileContents = await ReadFromFile(path);
 
@@ -37,7 +37,7 @@ namespace Prog
 
         public static IEnumerable<Product> ConvertReceiptToEnumerable(string[] values)
         {
-            
+            return new List<Product>();
         }
 
         private static async Task<string[]> ReadFromFile(string path)

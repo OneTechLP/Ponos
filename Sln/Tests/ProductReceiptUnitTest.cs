@@ -1,8 +1,9 @@
-﻿
-
-using System.Collections.Generic;
-using Prog;
+﻿using System;
 using Xunit;
+using System.Collections.Generic;
+using System.Linq;
+using FluentAssertions;
+using Prog;
 
 namespace Tests
 {
@@ -14,7 +15,7 @@ namespace Tests
             string[] values = { };
             var expectedValue = new List<Product>();
 
-            var actualValue = ConvertReceiptToEnumerable(values);
+            var actualValue = Product.ConvertReceiptToEnumerable(values);
 
             actualValue.Should().BeEquivalentTo(expectedValue);
         }
