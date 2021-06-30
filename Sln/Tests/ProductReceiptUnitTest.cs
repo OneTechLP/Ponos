@@ -83,5 +83,30 @@ namespace Tests
 
             actualValue.Should().BeEquivalentTo(expectedValue);
         }
+
+        [Fact]
+        public void SimpleReceiptWith2ItemSecondVoided()
+        {
+            string[] values =
+            {
+                "Some Store",
+                "SOME ITEM          5493535248             10.87 F",
+                "SOME Other ITEM    5258735248             18.14 F",
+                "*** VOIDED PRODUCT 5258735248 ***",
+                "                                    TOTAL 25.52"
+            };
+            var expectedValue = new List<Product>
+            {
+                new ()
+                {
+                    Code = "5493535248",
+                    Price = 10.87m
+                }
+            };
+
+            var actualValue = Product.ConvertReceiptToEnumerable(values);
+
+            actualValue.Should().BeEquivalentTo(expectedValue);
+        }
     }
 }
