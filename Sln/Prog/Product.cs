@@ -40,14 +40,24 @@ namespace Prog
         {
             var usefulLines = values.Skip(1).SkipLast(1);
             
-          
+            var regex = new Regex(@"\d+(\.\d+)?");
+            
+            var receiptProductList = new List<Product>();
 
-            return usefulLines.Select(product => product.Split(','))
-                .Select(product => new Product
+            foreach (var line in usefulLines)
+            {
+                var match = regex.Match(line);
+                var code = match.Value;
+                var price = Convert.ToDecimal(match.NextMatch().Value);
+                
+                receiptProductList.Add(new Product
                 {
-                    Code = product[0],
-                    Price = Convert.ToDecimal(product[1])
+                    Code = code,
+                    Price = price
                 });
+            }
+
+            return receiptProductList;
         }
 
         private static async Task<string[]> ReadFromFile(string path)
