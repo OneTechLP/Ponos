@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Prog
 {
@@ -24,7 +25,7 @@ namespace Prog
             //Read Receipts From directory
             var productsFromReceipts = Product.ReadReceiptFromFile(dir).Result;
             //Calculate Differences
-
+            var differences = WrongPriceProduct.FindImproperlyPricedProducts(productList, productsFromReceipts).ToList();
             //Write Report         
         }
 
