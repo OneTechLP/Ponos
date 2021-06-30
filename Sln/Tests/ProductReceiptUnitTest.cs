@@ -18,7 +18,7 @@ namespace Tests
         }
         
         [Fact]
-        public void SimpleReceiptWithNoItem()
+        public void SimpleReceiptWithNoItems()
         {
             string[] values =
             {
@@ -56,7 +56,7 @@ namespace Tests
         }
 
         [Fact]
-        public void SimpleReceiptWith2Item()
+        public void SimpleReceiptWith2Items()
         {
             string[] values =
             {
@@ -85,7 +85,7 @@ namespace Tests
         }
 
         [Fact]
-        public void SimpleReceiptWith2ItemSecondVoided()
+        public void ReceiptWith3ItemsSecondVoided()
         {
             string[] values =
             {
@@ -93,6 +93,7 @@ namespace Tests
                 "SOME ITEM          5493535248             10.87 F",
                 "SOME Other ITEM    5258735248             18.14 F",
                 "*** VOIDED PRODUCT 5258735248 ***",
+                "SOME Last ITEM     5222395262            218.14 F",
                 "                                    TOTAL 25.52"
             };
             var expectedValue = new List<Product>
@@ -101,6 +102,11 @@ namespace Tests
                 {
                     Code = "5493535248",
                     Price = 10.87m
+                },
+                new ()
+                {
+                    Code = "5222395262",
+                    Price = 218.14m
                 }
             };
 

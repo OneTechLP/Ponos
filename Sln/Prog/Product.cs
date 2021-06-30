@@ -46,15 +46,22 @@ namespace Prog
 
             foreach (var line in usefulLines)
             {
-                var match = regex.Match(line);
-                var code = match.Value;
-                var price = Convert.ToDecimal(match.NextMatch().Value);
-                
-                receiptProductList.Add(new Product
+                if (line.Contains("VOIDED"))
                 {
-                    Code = code,
-                    Price = price
-                });
+                    receiptProductList.RemoveAt(receiptProductList.Count - 1);
+                }
+                else
+                {
+                    var match = regex.Match(line);
+                    var code = match.Value;
+                    var price = Convert.ToDecimal(match.NextMatch().Value);
+                    
+                    receiptProductList.Add(new Product
+                    {
+                        Code = code,
+                        Price = price
+                    }); 
+                }
             }
 
             return receiptProductList;
