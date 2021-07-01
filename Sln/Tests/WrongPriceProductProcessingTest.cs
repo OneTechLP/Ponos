@@ -1,13 +1,11 @@
-﻿using System;
-using Xunit;
+﻿using Xunit;
 using System.Collections.Generic;
-using System.Linq;
 using FluentAssertions;
 using Prog;
 
 namespace Tests
 {
-    public class WrongPriceProductProcessing
+    public class WrongPriceProductProcessingTest
     {
         [Fact]
         public void EmptyPriceAndReceipts()
@@ -27,12 +25,12 @@ namespace Tests
         {
             var prices = new List<Product>
             {
-                new Product()
+                new ()
                 {
                     Code = "5493535248",
                     Price = 10.87m
                 },
-                new Product()
+                new ()
                 {
                     Code = "5258735248",
                     Price = 18.14m
@@ -52,12 +50,12 @@ namespace Tests
         {
             var prices = new List<Product>
             {
-                new Product()
+                new ()
                 {
                     Code = "5493535248",
                     Price = 10.87m
                 },
-                new Product()
+                new ()
                 {
                     Code = "5258735248",
                     Price = 18.14m
@@ -65,12 +63,12 @@ namespace Tests
             };
             var receipts = new List<Product>
             {
-                new Product()
+                new ()
                 {
                     Code = "5493535248",
                     Price = 10.87m
                 },
-                new Product()
+                new ()
                 {
                     Code = "5258735248",
                     Price = 28.14m
@@ -79,7 +77,7 @@ namespace Tests
 
             var ExpectedValue = new List<WrongPriceProduct>
             {
-                new WrongPriceProduct()
+                new ()
                 {
                     PriceDifference = 10m,
                     Product = new Product()
@@ -100,12 +98,12 @@ namespace Tests
         {
             var prices = new List<Product>
             {
-                new Product()
+                new ()
                 {
                     Code = "5493535248",
                     Price = 10.87m
                 },
-                new Product()
+                new ()
                 {
                     Code = "5258735248",
                     Price = 18.14m
@@ -113,12 +111,12 @@ namespace Tests
             };
             var receipts = new List<Product>
             {
-                new Product()
+                new ()
                 {
                     Code = "5493535248",
                     Price = 10.87m
                 },
-                new Product()
+                new ()
                 {
                     Code = "5258735248",
                     Price = 8.14m
@@ -127,7 +125,7 @@ namespace Tests
 
             var ExpectedValue = new List<WrongPriceProduct>
             {
-                new WrongPriceProduct()
+                new ()
                 {
                     PriceDifference = -10m,
                     Product = new Product()
@@ -148,12 +146,12 @@ namespace Tests
         {
             var prices = new List<Product>
             {
-                new Product()
+                new ()
                 {
                     Code = "5493535248",
                     Price = 10.87m
                 },
-                new Product()
+                new ()
                 {
                     Code = "5258735248",
                     Price = 18.14m
@@ -161,17 +159,17 @@ namespace Tests
             };
             var receipts = new List<Product>
             {
-                new Product()
+                new ()
                 {
                     Code = "5493535248",
                     Price = 10.87m
                 },
-                new Product()
+                new ()
                 {
                     Code = "5258735248",
                     Price = 28.14m
                 },
-                new Product()
+                new ()
                 {
                     Code = "5258735248",
                     Price = 28.14m
@@ -180,7 +178,7 @@ namespace Tests
 
             var ExpectedValue = new List<WrongPriceProduct>
             {
-                new WrongPriceProduct()
+                new ()
                 {
                     PriceDifference = 10m,
                     Product = new Product()
@@ -189,7 +187,7 @@ namespace Tests
                         Price = 18.14m
                     }
                 },
-                new WrongPriceProduct()
+                new ()
                 {
                     PriceDifference = 10m,
                     Product = new Product()
